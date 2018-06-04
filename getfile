@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#choose y/N to install
+yesno(){ read -p "$question " choice;case "$choice" in y|Y|yes|Yes|YES ) decision=1;; n|N|no|No|NO ) decision=0;; * ) echo "invalid" && yesno; esac; }
+
+
+echo -e "Please enter the IP address of the server you are connecting to.\n"
+read IP
+
+echo -e "Please enter the SSH port for the server.\n"
+read PORT
+
+echo -e "Enter the user you are connecting as.\n"
+read USER
+
+echo -e "Please provide the path to the file you wish to download\n"
+read FILE
+
+scp -P $PORT $USER@$IP:$FILE .
+
+echo -e "Would you like to upload to VirusTotal?[y/n]\n"
+yesno; if [ $decision = 1 ];then
+	PWD=$(pwd)
+	find $PWD -ctime -1
+	vt.py
+else
+	exit 0
+fi
