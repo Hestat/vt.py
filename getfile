@@ -21,7 +21,6 @@ scp -P $PORT $USER@$IP:$FILE .
 echo -e "Would you like to upload to VirusTotal?[y/n]\n"
 yesno; if [ $decision = 1 ];then
 	PWD=$(pwd)
-	find $PWD -ctime -1
 	vt.py
 else
 	exit 0
